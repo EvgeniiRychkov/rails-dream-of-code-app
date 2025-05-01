@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :courses
   resources :coding_classes
   resources :trimesters, only: %i[index show]
+  get '/dashboard', to: 'admin_dashboard#index'
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   root 'home#index'
