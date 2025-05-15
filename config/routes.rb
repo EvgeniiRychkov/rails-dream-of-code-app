@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   resources :enrollments
   resources :mentor_enrollment_assignments
   resources :lessons
-  resources :courses
+  resources :courses do
+    resources :submissions
+  end
   resources :coding_classes
-  resources :trimesters, only: %i[index show]
+  resources :trimesters, only: %i[index show edit update]
   get '/dashboard', to: 'admin_dashboard#index'
   get 'up' => 'rails/health#show', as: :rails_health_check
 

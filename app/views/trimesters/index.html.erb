@@ -1,6 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
 <h1>Trimesters</h1>
 <ul>
   <% @trimesters.each do |trimester| %>
-   <li><%= "#{trimester.term} #{trimester.year}" %></li>
+    <li>
+      <span><%= trimester.display_name %></span>
+      <%= link_to "Edit", edit_trimester_path(trimester) %>
+    </li>
   <% end %>
-<ul>
+</ul>
+
+<div class="mt-4">
+  <%= link_to "Back to dashboard", dashboard_path %>
+</div>

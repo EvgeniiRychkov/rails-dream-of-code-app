@@ -3,8 +3,8 @@ class SubmissionsController < ApplicationController
   def new
     @course = Course.find(params[:course_id])
     @submission = Submission.new
-    @enrollments # TODO: What set of enrollments should be listed in the dropdown?
-    @lessons # TODO: What set of lessons should be listed in the dropdown?
+    @enrollments = @course.enrollments.includes(:student)
+    @lessons = @course.lessons
   end
 
   def create
@@ -14,8 +14,8 @@ class SubmissionsController < ApplicationController
     if @submission.save
       redirect_to course_path(@course), notice: 'Submission was successfully created.'
     else
-      @enrollments # TODO: Set this up just as in the new action
-      @lessons # TODO: Set this up just as in the new action
+      @enrollments = @course.enrollments.includes(:student)
+      @lessons = @course.lessons
       render :new
     end
   end
@@ -29,8 +29,9 @@ class SubmissionsController < ApplicationController
   end
 
   private
-    # Only allow a list of trusted parameters through.
-    def submission_params
-      params.require(:submission).permit(:lesson_id, :enrollment_id, :mentor_id, :review_result, :reviewed_at)
-    end
+
+  # Only allow a list of trusted parameters through.
+  def submission_params
+    params.require(:submission).permit(:lesson_id, :enrollment_id, :mentor_id, :review_result, :reviewed_at)
+  end
 end
